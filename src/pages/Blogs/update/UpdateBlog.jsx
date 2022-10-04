@@ -6,18 +6,17 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import Select from "react-select/creatable";
 import NavBar from "../../../components/Navigation/NavBar";
 import Error from "../../../components/ui/Error";
-import UseProjectUpdate from "./useProjectUpdate";
+import UseProjectUpdate from "./useBlogUpdate";
 
-const UpdateProject = () => {
+const UpdateBlog = () => {
   const {
     handleSubmit,
-    handleDrop,
+    inputCategory,
     inputTitle,
-    inputSubtitle,
-    inputUrl,
     isLoading,
     groupedOptions,
     selectImage,
+    inputThumbImages,
     handleChangeSelect,
     setSelectImage,
     photoLoading1,
@@ -25,19 +24,17 @@ const UpdateProject = () => {
     uploadImage,
     LoadingImage,
     inputCoverImage,
-    inputGalleryImages,
-    handleFileEvent,
-    fileLimit,
-    uploadedFiles,
     editorState,
     handleEditorChange,
     convertedContent,
     error,
-    createMarkup,
     setInputTitle,
-    setInputSubtitle,
-    setInputUrl,
+    createMarkup,
+    selectThumbImage,
+    setSelectThumbImage,
+    uploadThumbImage,
   } = UseProjectUpdate();
+  console.log("image", selectThumbImage);
   return (
     <>
       <NavBar />
@@ -57,28 +54,10 @@ const UpdateProject = () => {
                 onChange={(e) => setInputTitle(e.target.value)}
               />
             </div>
-            <div className="mb-3 w-full">
-              <Input
-                label="SubTitle"
-                type="text"
-                name="subtitle"
-                value={inputSubtitle}
-                onChange={(e) => setInputSubtitle(e.target.value)}
-              />
-            </div>
-            <div className="mb-3 w-full">
-              <Input
-                label="Project URL"
-                type="url"
-                name="url"
-                value={inputUrl}
-                onChange={(e) => setInputUrl(e.target.value)}
-              />
-            </div>
             <Select
               options={groupedOptions}
               isMulti
-              defaultValue={selectImage}
+              // defaultValue={selectImage}
               // defaultValue={inputCategory?.join(" ")}
               onChange={handleChangeSelect}
               isClearable
@@ -95,7 +74,7 @@ const UpdateProject = () => {
               />
               <img
                 src={inputCoverImage}
-                className="w-4 border border-blue-400 rounded"
+                className="w-10 h-10 border border-blue-400 rounded"
                 alt=""
               />
               <Button
@@ -103,13 +82,7 @@ const UpdateProject = () => {
                 size="sm"
                 color={inputCoverImage?.length > 3 ? "green" : "blue"}
                 className=" flex items-center gap-2"
-                disabled={
-                  photoLoading1 ||
-                  inputCoverImage ||
-                  photoLoading1 ||
-                  !selectImage ||
-                  inputCoverImage?.length > 3
-                }
+                disabled={photoLoading1 || inputCoverImage || !selectImage}
               >
                 {" "}
                 {photoLoading1 && (
@@ -122,7 +95,46 @@ const UpdateProject = () => {
                   : "upload"}
               </Button>
             </div>
-            <div className="mb-3 w-full flex">
+            <div className="my-6 w-full flex">
+              <Input
+                label="Cover Image"
+                type="file"
+                variant="standard"
+                accept="image/*"
+                name="coverImage"
+                onChange={(e) => setSelectThumbImage(e.target.files[0])}
+                disabled={photoLoading2 || selectThumbImage !== ""}
+              />
+              <img
+                src={inputThumbImages}
+                className="w-10 h-10 border border-blue-400 rounded"
+                alt=""
+              />
+              <Button
+                onClick={uploadThumbImage}
+                size="sm"
+                color={inputCoverImage?.length > 3 ? "green" : "blue"}
+                className=" flex items-center gap-2"
+                disabled={
+                  photoLoading2 ||
+                  inputThumbImages ||
+                  photoLoading2 ||
+                  !selectImage ||
+                  inputThumbImages?.length > 3
+                }
+              >
+                {" "}
+                {photoLoading2 && (
+                  <img className="w-5" src={LoadingImage} alt="" />
+                )}
+                {photoLoading2
+                  ? "Uploading"
+                  : inputThumbImages?.length > 3
+                  ? "Uploaded"
+                  : "upload"}
+              </Button>
+            </div>
+            {/* <div className="mb-3 w-full flex">
               <Input
                 label="galleryImages"
                 type="file"
@@ -135,7 +147,7 @@ const UpdateProject = () => {
                   fileLimit || photoLoading1 || uploadedFiles?.length > 0
                 }
               />
-              {inputGalleryImages?.map((img, i) => (
+              {inputGalleryImages?.map(((img,i)) => (
                 <img
                   key={i}
                   src={img}
@@ -163,7 +175,7 @@ const UpdateProject = () => {
                   ? "Uploaded"
                   : "uploads"}
               </Button>
-            </div>
+            </div> */}
             {/* editor */}
             <Editor
               defaultEditorState={editorState}
@@ -181,7 +193,7 @@ const UpdateProject = () => {
               {isLoading ? (
                 <img className="w-5" src={LoadingImage} alt="" />
               ) : (
-                "ADD"
+                "Update"
               )}
             </Button>
             {error && <Error message={error.data} />}
@@ -193,4 +205,4 @@ const UpdateProject = () => {
   );
 };
 
-export default UpdateProject;
+export default UpdateBlog;

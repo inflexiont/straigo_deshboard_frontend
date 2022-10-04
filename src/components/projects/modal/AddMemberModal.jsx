@@ -61,9 +61,9 @@ const AddMemberModal = ({ open, handleOpen, members, id }) => {
               placeholder="Search the person"
             />
             <Combobox.Options>
-              {filteredPeople?.map((person) => (
+              {filteredPeople?.map((person, i) => (
                 <Combobox.Option
-                  key={person}
+                  key={i}
                   value={person}
                   className="w-full h-10  px-3 py-2 bg-blue-50 hover:bg-gray-200 "
                 >

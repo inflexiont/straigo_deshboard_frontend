@@ -1,6 +1,8 @@
 import React from "react";
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Blogs from "./pages/Blogs/Blogs";
+import UpdateBlog from "./pages/Blogs/update/UpdateBlog";
 import Login from "./pages/Login/Login";
 import CreateProject from "./pages/projects/create/CreateProject";
 import Projects from "./pages/projects/Projects";
@@ -44,14 +46,22 @@ const Routers = () => {
               </PrivateRoute>
             }
           />
-          {/* <Route
-          path="/teams"
-          element={
-            <PrivateRoute>
-              <Teams />
-            </PrivateRoute>
-          }
-        /> */}
+          <Route
+            path="/blogs"
+            element={
+              <PrivateRoute>
+                <Blogs />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/blog/:blogId"
+            element={
+              <PrivateRoute>
+                <UpdateBlog />
+              </PrivateRoute>
+            }
+          />
         </Routes>
       </BrowserRouter>
     </div>

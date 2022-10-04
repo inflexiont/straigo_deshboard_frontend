@@ -3,32 +3,23 @@ import React, { useState } from "react";
 import { AiFillDelete } from "react-icons/ai";
 import { FaEdit } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import DeleteProject from "./delete/DeleteProject";
-const ProjectCard = ({ project }) => {
-  const {
-    _id,
-    date,
-    details,
-    filters,
-    galleryImages,
-    subtitle,
-    title,
-    url,
-    coverImage,
-  } = project;
+import DeleteBlog from "./delete/DeleteBlog";
+const BlogCard = ({ blog }) => {
+  const { _id, date, details, category, title, cover, thumb } = blog;
   // delete modal
+  console.log(cover);
   const [DeleteOpen, setDeleteOpen] = useState(false);
   const handleDeleteOpen = () => setDeleteOpen(!DeleteOpen);
   return (
     <>
-      <DeleteProject
+      <DeleteBlog
         id={_id}
         DeleteOpen={DeleteOpen}
         handleDeleteOpen={handleDeleteOpen}
       />
       <div className="relative flex flex-col items-start p-4 mt-3 bg-white rounded-lg cursor-pointer bg-opacity-90 group hover:bg-opacity-100 ">
         <div className="flex ml-auto ">
-          <Link to={`/project/${_id}`}>
+          <Link to={`/blog/${_id}`}>
             <FaEdit
               size="29"
               className="hover:scale-125 duration-200 hover:text-blue-600 mr-10 text-blue-400"
@@ -41,22 +32,13 @@ const ProjectCard = ({ project }) => {
           />
         </div>
         <SingleText keySting="Title" value={title} />
-        <SingleText keySting="Subtitle" value={subtitle} />
         <SingleText keySting="Details" value={details} tag="details" />
         <SingleText keySting="Date" value={date} />
-        <SingleText keySting="CoverImage" value={coverImage} tag="img" />
-        <SingleText keySting="Url" value={url} />
-        {galleryImages.map((image, i) => (
+        <SingleText keySting="CoverImage" value={cover} tag="img" />
+        <SingleText keySting="TambnaleImage" value={thumb} tag="img" />
+        {category?.map((filter, i) => (
           <SingleText
             key={i}
-            keySting="GalleryImage [' ']"
-            value={image}
-            tag="img"
-          />
-        ))}
-        {filters.map((filter) => (
-          <SingleText
-            key={filter}
             keySting="  filters/category [' ']"
             value={filter}
           />
@@ -90,4 +72,4 @@ const SingleText = ({ keySting, value, tag }) => {
     </div>
   );
 };
-export default ProjectCard;
+export default BlogCard;

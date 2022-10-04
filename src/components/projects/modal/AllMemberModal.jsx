@@ -32,10 +32,10 @@ const AllMemberModal = ({ allOpen, handleAllOpen, members, author }) => {
       <h1 className="font-bold text-xl ml-6">Available Members.</h1>
       <DialogBody>
         <div className="flex gap-4 flex-wrap justify-center items-center">
-          {members.map((member) => {
+          {members.map((member, i) => {
             const { image, name } = getAvatarFromEmail(member);
             return (
-              <div key={member} className="w-20 bg-green-200 p-2 ">
+              <div key={i} className="w-20 bg-green-200 p-2 ">
                 <p className=" rounded-md p-2 ">{name}</p>
                 <img src={image} alt="" className="rounded" />
               </div>

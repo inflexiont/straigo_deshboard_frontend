@@ -23,9 +23,9 @@ const NavBar = () => {
         </Link>
         <Link
           className="mx-2 text-sm font-semibold text-gray-600 hover:text-indigo-700"
-          to="/teams"
+          to="/blogs"
         >
-          Team
+          Blogs
         </Link>
       </div>
       <div className="flex items-center ml-auto overflow-">

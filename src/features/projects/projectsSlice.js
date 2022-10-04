@@ -4,6 +4,7 @@ const projectsSlice = createSlice({
   name: "project",
   initialState: {
     projects: [],
+    project: {},
   },
 
   reducers: {

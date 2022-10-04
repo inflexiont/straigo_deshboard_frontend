@@ -1,18 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import BlogCard from "../../components/blogs/BlogCard";
 import NavBar from "../../components/Navigation/NavBar";
-import ProjectCard from "../../components/projects/ProjectCard";
 import Error from "../../components/ui/Error";
-import { useFetchProjectsQuery } from "../../features/projects/projectsApi";
+import { useFetchBlogsQuery } from "../../features/blogs/blogApi";
 import Loader from "../../utils/Loader";
 import NavLogo from "../../utils/NavLogo";
-const Projects = () => {
-  const {
-    data: fetchProjects,
-    isLoading,
-    isError,
-    error,
-  } = useFetchProjectsQuery();
+
+const Blogs = () => {
+  const { data: fetchBlogs, isLoading, isError, error } = useFetchBlogsQuery();
 
   // decide what to render
   let content = null;
@@ -28,21 +24,20 @@ const Projects = () => {
         <Error message={error?.data} />
       </div>
     );
-  } else if (!isLoading && !isError && fetchProjects?.length === 0) {
+  } else if (!isLoading && !isError && fetchBlogs?.length === 0) {
     content = <p className="m-2 text-center">No Project found!</p>;
-  } else if (!isLoading && !isError && fetchProjects?.length > 0) {
-    content = fetchProjects?.map((project) => (
-      <ProjectCard key={project._id} project={project} />
+  } else if (!isLoading && !isError && fetchBlogs?.length > 0) {
+    content = fetchBlogs?.map((blog) => (
+      <BlogCard key={blog._id} blog={blog} />
     ));
   }
-  console.log(fetchProjects);
-
+  console.log(fetchBlogs);
   return (
     <>
       <div className="flex flex-col w-screen h-screen overflow-auto text-gray-700 bg-gradient-to-tr from-blue-200 via-indigo-200 to-pink-200">
         <NavBar />
         <div className="px-10 mt-6 flex justify-between">
-          <h1 className="text-2xl font-bold">Projects</h1>
+          <h1 className="text-2xl font-bold">Blogs</h1>
           <Link to="/project/create">
             <button className="flex items-center justify-center w-6 h-6 ml-auto text-indigo-500 rounded hover:bg-indigo-500 hover:text-indigo-100">
               <svg
@@ -80,4 +75,4 @@ const Projects = () => {
   );
 };
 
-export default Projects;
+export default Blogs;
