@@ -2,8 +2,9 @@ import React from "react";
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./pages/Login/Login";
-import CreateProject from "./pages/projects/CreateProject";
+import CreateProject from "./pages/projects/create/CreateProject";
 import Projects from "./pages/projects/Projects";
+import UpdateProject from "./pages/projects/update/UpdateProject";
 import PrivateRoute from "./utils/PrivateRoute";
 import PublicRoute from "./utils/PublicRoute";
 const Routers = () => {
@@ -32,6 +33,14 @@ const Routers = () => {
             element={
               <PrivateRoute>
                 <CreateProject />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/project/:projectId"
+            element={
+              <PrivateRoute>
+                <UpdateProject />
               </PrivateRoute>
             }
           />

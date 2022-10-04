@@ -1,20 +1,14 @@
-import { Button, Input } from "@material-tailwind/react";
 import Axios from "axios";
+import DOMPurify from "dompurify";
 import { convertToHTML } from "draft-convert";
 import { EditorState } from "draft-js";
 import "draft-js/dist/Draft.css";
-
-import DOMPurify from "dompurify";
-import React, { useState } from "react";
-import { Editor } from "react-draft-wysiwyg";
+import { useState } from "react";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { useDispatch } from "react-redux";
-import Select from "react-select/creatable";
-import LoadingImage from "../../assets/loading.svg";
-import NavBar from "../../components/Navigation/NavBar";
-import { useAddNewProjectMutation } from "../../features/projects/projectsApi";
-import { groupedOptions } from "./data";
-import "./RichEditor.css";
+import LoadingImage from "../../../assets/loading.svg";
+import { useAddNewProjectMutation } from "../../../features/projects/projectsApi";
+
 const initialState = {
   title: "",
   subtitle: "",
@@ -25,7 +19,7 @@ const initialState = {
   category: [],
 };
 const MAX_COUNT = 5;
-const CreateProject = () => {
+const UseProjectCreate = () => {
   const [formStates, setFormStates] = useState({ ...initialState });
   const [photoLoading1, setPhotoLoading1] = useState(false);
   const [photoLoading2, setPhotoLoading2] = useState(false);
@@ -149,126 +143,31 @@ const CreateProject = () => {
       __html: DOMPurify.sanitize(html),
     };
   };
-  console.log(photoLoading2);
-  return (
-    <>
-      <div className="flex flex-col w-screen h-screen overflow-auto text-gray-700 bg-gradient-to-tr from-blue-200 via-indigo-200 to-pink-200">
-        <NavBar />
-        <form
-          className="bg-white w-10/12 mx-auto p-5 rounded-md mt-8"
-          onSubmit={handleSubmit}
-        >
-          <p className="text-2xl font-bold mb-3">Create A new Project</p>
-          <div className="mb-3 w-full">
-            <Input
-              label="Title"
-              type="text"
-              name="title"
-              value={formStates.title}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="mb-3 w-full">
-            <Input
-              label="SubTitle"
-              type="text"
-              name="subtitle"
-              value={formStates.subtitle}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="mb-3 w-full">
-            <Input
-              label="Project URL"
-              type="url"
-              name="url"
-              value={formStates.url}
-              onChange={handleChange}
-            />
-          </div>
-          <Select
-            options={groupedOptions}
-            isMulti
-            onChange={handleChangeSelect}
-            isClearable
-          />
-          <div className="my-6 w-full flex">
-            <Input
-              label="Cover Image"
-              type="file"
-              variant="standard"
-              accept="image/*"
-              name="coverImage"
-              onChange={(e) => setSelectImage(e.target.files[0])}
-              disabled={photoLoading1 || selectImage !== ""}
-            />
-            <Button
-              onClick={uploadImage}
-              size="sm"
-              className=" flex items-center gap-2"
-              disabled={
-                photoLoading1 ||
-                formStates.coverImage ||
-                photoLoading1 ||
-                !selectImage
-              }
-            >
-              {" "}
-              {photoLoading1 && (
-                <img className="w-5" src={LoadingImage} alt="" />
-              )}
-              {photoLoading1 ? "Uploading" : "upload"}
-            </Button>
-          </div>
-          <div className="mb-3 w-full flex">
-            <Input
-              label="galleryImages"
-              type="file"
-              accept="image/*"
-              multiple="multiple"
-              variant="standard"
-              name="galleryImages"
-              onChange={handleFileEvent}
-              disabled={fileLimit || photoLoading1 || uploadedFiles.length > 0}
-            />
-            <Button
-              size="sm"
-              onClick={() => handleDrop(uploadedFiles)}
-              className=" flex items-center gap-2"
-              disabled={photoLoading2 || !uploadedFiles.length > 0}
-            >
-              {" "}
-              {photoLoading2 && (
-                <img className="w-5" src={LoadingImage} alt="" />
-              )}
-              {photoLoading2 ? "Uploading" : "uploads"}
-            </Button>
-          </div>
-          {/* editor */}
-          <Editor
-            defaultEditorState={editorState}
-            onEditorStateChange={handleEditorChange}
-            wrapperClassName="wrapper-class"
-            editorClassName="editor-class"
-            toolbarClassName="toolbar-class"
-          />
-          {" Preview"}
-          <div
-            className="preview"
-            dangerouslySetInnerHTML={createMarkup(convertedContent)}
-          ></div>
-          <Button className="mb-3 w-full" type="submit">
-            {isLoading ? (
-              <img className="w-5" src={LoadingImage} alt="" />
-            ) : (
-              "ADD"
-            )}
-          </Button>
-          {error && <Error message={error.data} />}
-        </form>
-      </div>
-    </>
-  );
+
+  return {
+    handleSubmit,
+    handleDrop,
+    formStates,
+    handleChange,
+    isLoading,
+    handleChangeSelect,
+    setSelectImage,
+    photoLoading1,
+    photoLoading2,
+    selectImage,
+    uploadImage,
+    LoadingImage,
+    handleFileEvent,
+    fileLimit,
+    uploadedFiles,
+    editorState,
+    handleEditorChange,
+    convertedContent,
+    error,
+    initialState,
+    MAX_COUNT,
+    createMarkup,
+  };
 };
 
-export default CreateProject;
+export default UseProjectCreate;

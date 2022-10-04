@@ -13,8 +13,12 @@ const projectsSlice = createSlice({
     search: (state, action) => {
       state.searchString = action.payload;
     },
+    setProjectToAction: (state, action) => {
+      state.project = action.payload;
+    },
   },
 });
 
-export const { setProjectsToAction, search } = projectsSlice.actions;
+export const { setProjectsToAction, search, setProjectToAction } =
+  projectsSlice.actions;
 export default projectsSlice.reducer;

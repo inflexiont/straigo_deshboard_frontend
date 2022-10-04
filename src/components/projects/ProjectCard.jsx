@@ -1,7 +1,11 @@
 import DOMPurify from "dompurify";
 import React from "react";
+import { AiFillDelete } from "react-icons/ai";
+import { FaEdit } from "react-icons/fa";
+import { Link } from "react-router-dom";
 const ProjectCard = ({ project }) => {
   const {
+    _id,
     date,
     details,
     filters,
@@ -14,6 +18,18 @@ const ProjectCard = ({ project }) => {
   return (
     <>
       <div className="relative flex flex-col items-start p-4 mt-3 bg-white rounded-lg cursor-pointer bg-opacity-90 group hover:bg-opacity-100 ">
+        <div className="flex ml-auto ">
+          <Link to={`/project/${_id}`}>
+            <FaEdit
+              size="29"
+              className="hover:scale-125 duration-200 hover:text-blue-600 mr-10 text-blue-400"
+            />
+          </Link>
+          <AiFillDelete
+            size="29"
+            className="hover:scale-125 duration-200 hover:text-red-500 text-red-300"
+          />
+        </div>
         <SingleText keySting="Title" value={title} />
         <SingleText keySting="Subtitle" value={subtitle} />
         <SingleText keySting="Details" value={details} tag="details" />
@@ -21,10 +37,19 @@ const ProjectCard = ({ project }) => {
         <SingleText keySting="CoverImage" value={coverImage} tag="img" />
         <SingleText keySting="Url" value={url} />
         {galleryImages.map((image) => (
-          <SingleText keySting="GalleryImage [' ']" value={image} tag="img" />
+          <SingleText
+            key={image}
+            keySting="GalleryImage [' ']"
+            value={image}
+            tag="img"
+          />
         ))}
         {filters.map((filter) => (
-          <SingleText keySting="  filters/category [' ']" value={filter} />
+          <SingleText
+            key={filter}
+            keySting="  filters/category [' ']"
+            value={filter}
+          />
         ))}
       </div>
     </>
