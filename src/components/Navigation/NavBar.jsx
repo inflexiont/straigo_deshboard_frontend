@@ -27,6 +27,12 @@ const NavBar = () => {
         >
           Blogs
         </Link>
+        <Link
+          className="mx-2 text-sm font-semibold text-gray-600 hover:text-indigo-700"
+          to="/reviews"
+        >
+          Reviews
+        </Link>
       </div>
       <div className="flex items-center ml-auto overflow-">
         <span className="font-bold cursor-pointer hover:text-purple-700 mr-1">

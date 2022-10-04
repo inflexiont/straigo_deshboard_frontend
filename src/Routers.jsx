@@ -7,6 +7,8 @@ import Login from "./pages/Login/Login";
 import CreateProject from "./pages/projects/create/CreateProject";
 import Projects from "./pages/projects/Projects";
 import UpdateProject from "./pages/projects/update/UpdateProject";
+import Reviews from "./pages/review/Reviews";
+import UpdateReview from "./pages/review/update/UpdateReview";
 import PrivateRoute from "./utils/PrivateRoute";
 import PublicRoute from "./utils/PublicRoute";
 const Routers = () => {
@@ -59,6 +61,22 @@ const Routers = () => {
             element={
               <PrivateRoute>
                 <UpdateBlog />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/reviews"
+            element={
+              <PrivateRoute>
+                <Reviews />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/review/:reviewId"
+            element={
+              <PrivateRoute>
+                <UpdateReview />
               </PrivateRoute>
             }
           />

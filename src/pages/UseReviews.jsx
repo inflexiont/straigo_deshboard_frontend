@@ -3,7 +3,7 @@ import { useFetchProjectsQuery } from "../features/projects/projectsApi";
 import { selectProjects } from "../features/projects/projectSelector";
 import { setProjectsToAction } from "../features/projects/projectsSlice";
 
-const UseProjects = () => {
+const UseReviews = () => {
   const dispatch = useDispatch();
   const { data } = useFetchProjectsQuery();
 
@@ -12,4 +12,4 @@ const UseProjects = () => {
   return { projects: useSelector(selectProjects) };
 };
 
-export default UseProjects;
+export default UseReviews;
