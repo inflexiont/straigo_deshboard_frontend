@@ -1,8 +1,9 @@
 import DOMPurify from "dompurify";
-import React from "react";
+import React, { useState } from "react";
 import { AiFillDelete } from "react-icons/ai";
 import { FaEdit } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import DeleteProject from "./delete/DeleteProject";
 const ProjectCard = ({ project }) => {
   const {
     _id,
@@ -15,8 +16,16 @@ const ProjectCard = ({ project }) => {
     url,
     coverImage,
   } = project;
+  // delete modal
+  const [DeleteOpen, setDeleteOpen] = useState(false);
+  const handleDeleteOpen = () => setDeleteOpen(!DeleteOpen);
   return (
     <>
+      <DeleteProject
+        id={_id}
+        DeleteOpen={DeleteOpen}
+        handleDeleteOpen={handleDeleteOpen}
+      />
       <div className="relative flex flex-col items-start p-4 mt-3 bg-white rounded-lg cursor-pointer bg-opacity-90 group hover:bg-opacity-100 ">
         <div className="flex ml-auto ">
           <Link to={`/project/${_id}`}>
@@ -26,6 +35,7 @@ const ProjectCard = ({ project }) => {
             />
           </Link>
           <AiFillDelete
+            onClick={handleDeleteOpen}
             size="29"
             className="hover:scale-125 duration-200 hover:text-red-500 text-red-300"
           />

@@ -17,7 +17,7 @@ const projectsApi = apiSlice.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ["Project"],
+      invalidatesTags: ["Projects"],
     }),
 
     updateProject: builder.mutation({
@@ -28,42 +28,51 @@ const projectsApi = apiSlice.injectEndpoints({
           body: data,
         };
       },
-    }),
-    updateProjectTeam: builder.mutation({
-      query: ({ id, data }) => {
-        return {
-          url: `/projects/${id}`,
-          method: "PATCH",
-          body: data,
-        };
-      },
       invalidatesTags: ["Projects"],
     }),
-
     deleteProject: builder.mutation({
-      query: ({ id, author }) => ({
+      query: (id) => ({
         url: `/projects/${id}`,
         method: "DELETE",
       }),
-
-      async onQueryStarted(arg, { queryFulfilled, dispatch, getState }) {
-        let { assignedProjectsQuery } = getState().projects || {};
-        try {
-          await queryFulfilled;
-          dispatch(
-            projectsApi.util.updateQueryData(
-              "fetchProjects",
-              { assignedProjectsQuery, sort: "id", order: "desc" },
-              (draft) => {
-                return (draft = draft.filter(
-                  (project) => project.id !== arg.id
-                ));
-              }
-            )
-          );
-        } catch (error) {}
-      },
+      invalidatesTags: ["Projects"],
     }),
+    // updateProjectTeam: builder.mutation({
+    //   query: ({ id, data }) => {
+    //     return {
+    //       url: `/projects/${id}`,
+    //       method: "PATCH",
+    //       body: data,
+    //     };
+    //   },
+    //   invalidatesTags: ["Projects"],
+    // }),
+
+    // deleteProject: builder.mutation({
+    //   query: ({ id, author }) => ({
+    //     url: `/projects/${id}`,
+    //     method: "DELETE",
+    //   }),
+
+    //   async onQueryStarted(arg, { queryFulfilled, dispatch, getState }) {
+    //     let { assignedProjectsQuery } = getState().projects || {};
+    //     try {
+    //       await queryFulfilled;
+    //       dispatch(
+    //         projectsApi.util.updateQueryData(
+    //           "fetchProjects",
+    //           { assignedProjectsQuery, sort: "id", order: "desc" },
+    //           (draft) => {
+    //             return (draft = draft.filter(
+    //               (project) => project.id !== arg.id
+    //             ));
+    //           }
+    //         )
+    //       );
+    //     } catch (error) {}
+    //   },
+    // }),
+    // }),
   }),
 });
 
@@ -71,7 +80,6 @@ export const {
   useFetchProjectsQuery,
   useAddNewProjectMutation,
   useUpdateProjectMutation,
-  useDeleteProjectMutation,
   useGetProjectQuery,
-  useUpdateProjectTeamMutation,
+  useDeleteProjectMutation,
 } = projectsApi;
