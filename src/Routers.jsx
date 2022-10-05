@@ -11,6 +11,9 @@ import UpdateProject from "./pages/projects/update/UpdateProject";
 import CreateReview from "./pages/review/create/CreateReview";
 import Reviews from "./pages/review/Reviews";
 import UpdateReview from "./pages/review/update/UpdateReview";
+import CreateUser from "./pages/user/create/CreateUser";
+import UpdateUser from "./pages/user/update/UpdateUser";
+import Users from "./pages/user/Users";
 import PrivateRoute from "./utils/PrivateRoute";
 import PublicRoute from "./utils/PublicRoute";
 const Routers = () => {
@@ -95,6 +98,30 @@ const Routers = () => {
             element={
               <PrivateRoute>
                 <UpdateReview />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/users"
+            element={
+              <PrivateRoute>
+                <Users />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/users/create"
+            element={
+              <PrivateRoute>
+                <CreateUser />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/user/:userId"
+            element={
+              <PrivateRoute>
+                <UpdateUser />
               </PrivateRoute>
             }
           />
