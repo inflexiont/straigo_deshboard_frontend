@@ -3,68 +3,47 @@ import DOMPurify from "dompurify";
 import { convertToHTML } from "draft-convert";
 import { EditorState } from "draft-js";
 import "draft-js/dist/Draft.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import LoadingImage from "../../../assets/loading.svg";
-import {
-  useGetBlogQuery,
-  useUpdateBlogMutation,
-} from "../../../features/blogs/blogApi";
-import { selectBlog } from "../../../features/blogs/blogsSelector";
-import { setBlogToAction } from "../../../features/blogs/blogsSlice";
+import { useAddNewBlogMutation } from "../../../features/blogs/blogApi";
 import { groupedOptions } from "./data";
-const UseBlogUpdate = () => {
-  const { blogId } = useParams();
-  const blog = useSelector(selectBlog);
-  const { data } = useGetBlogQuery(blogId);
-
-  console.log("data", blog);
-  useEffect(() => {
-    dispatch(setBlogToAction(data));
-  }, [data]);
-
+const UseBlogCreate = () => {
   const [inputTitle, setInputTitle] = useState("");
   const [inputDetails, setInputDetails] = useState("");
-  const [inputCoverImage, setInputCoverImage] = useState("");
-  const [inputThumbImages, setInputThumbImages] = useState("");
   const [inputCategory, setInputCategory] = useState([]);
   const [photoLoading1, setPhotoLoading1] = useState(false);
   const [photoLoading2, setPhotoLoading2] = useState(false);
 
-  // handle inputs
-  const setInput = (blog) => {
-    setInputTitle(blog?.title);
-    setInputDetails(blog?.details);
-    setInputCoverImage(blog?.cover);
-    setInputThumbImages(blog?.thumb);
-    setInputCategory(blog?.category);
-    setConvertedContent(blog?.details);
-    setEditorState(blog?.details);
-  };
-  useEffect(() => {
-    setInput(blog);
-  }, [blog]);
-  console.log("blgo", blog);
-
   // add new project
-  const [updateBlog, { isLoading, error }] = useUpdateBlogMutation();
+  const [addNewBlog, { isLoading, error, isSuccess }] = useAddNewBlogMutation();
+  const notify = () => toast("Wow so easy!");
   const dispatch = useDispatch();
+  const clearBlog = () => {
+    setInputTitle("");
+    setInputDetails("");
+    setInputCategory([]);
+    setSelectImage("");
+    setSelectThumbImage("");
+    setPhotoLoading1(false);
+    setPhotoLoading2(false);
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(
-      updateBlog({
-        id: blogId,
-        data: {
-          title: inputTitle,
-          details: inputDetails,
-          cover: inputCoverImage,
-          thumb: inputThumbImages,
-          category: inputCategory,
-        },
+      addNewBlog({
+        title: inputTitle,
+        details: inputDetails,
+        category: inputCategory,
+        cover: selectImage,
+        thumb: selectThumbImage,
       })
     );
+    clearBlog();
+    isSuccess && notify("added");
   };
 
   // cover image upload
@@ -78,7 +57,7 @@ const UseBlogUpdate = () => {
       "https://api.cloudinary.com/v1_1/serabuy-com/image/upload",
       formData
     ).then((res) => {
-      setInputCoverImage(res.data.secure_url);
+      setSelectImage(res.data.secure_url);
       setPhotoLoading1(false);
     });
   };
@@ -88,13 +67,13 @@ const UseBlogUpdate = () => {
   const uploadThumbImage = () => {
     setPhotoLoading2(true);
     const formData = new FormData();
-    formData.append("file", selectImage);
+    formData.append("file", selectThumbImage);
     formData.append("upload_preset", "SerabuyImage");
     Axios.post(
       "https://api.cloudinary.com/v1_1/serabuy-com/image/upload",
       formData
     ).then((res) => {
-      setInputThumbImages(res.data.secure_url);
+      setSelectThumbImage(res.data.secure_url);
       setPhotoLoading2(false);
     });
   };
@@ -104,7 +83,6 @@ const UseBlogUpdate = () => {
     const reduceValue = newValue?.map((value) => value.value);
     setInputCategory([...reduceValue]);
   };
-  console.log("sdfsdf", inputCategory);
 
   // editor
   const [editorState, setEditorState] = useState(() =>
@@ -137,8 +115,6 @@ const UseBlogUpdate = () => {
     photoLoading2,
     uploadImage,
     LoadingImage,
-    inputCoverImage,
-    inputThumbImages,
     editorState,
     handleEditorChange,
     convertedContent,
@@ -152,4 +128,4 @@ const UseBlogUpdate = () => {
   };
 };
 
-export default UseBlogUpdate;
+export default UseBlogCreate;

@@ -4,9 +4,9 @@ import React from "react";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import NavBar from "../../../components/Navigation/NavBar";
 import Error from "../../../components/ui/Error";
-import UseReviewUpdate from "./useReviewUpdate";
+import UseReviewCreate from "./useReviewCreate";
 
-const UpdateReview = () => {
+const CreateReview = () => {
   const {
     handleSubmit,
     inputName,
@@ -27,9 +27,9 @@ const UpdateReview = () => {
     setInputMessage,
     setInputStar,
     photoLoading1,
-  } = UseReviewUpdate();
+  } = UseReviewCreate();
   console.log(inputCoverImage);
-  console.log(selectImage);
+  console.log(inputMessage);
   return (
     <>
       <NavBar />
@@ -119,7 +119,11 @@ const UpdateReview = () => {
               </Button>
             </div>
 
-            <Button className="mb-3 w-full" type="submit">
+            <Button
+              className="mb-3 w-full"
+              type="submit"
+              disabled={inputMessage?.length <= 70}
+            >
               {isLoading ? (
                 <img className="w-5" src={LoadingImage} alt="" />
               ) : (
@@ -133,5 +137,4 @@ const UpdateReview = () => {
     </>
   );
 };
-
-export default UpdateReview;
+export default CreateReview;

@@ -44,7 +44,7 @@ const UpdateBlog = () => {
             className="bg-white w-10/12 mx-auto p-5 rounded-md mt-8"
             onSubmit={handleSubmit}
           >
-            <p className="text-2xl font-bold mb-3">Update Project</p>
+            <p className="text-2xl font-bold mb-3">Update Blog</p>
             <div className="mb-3 w-full">
               <Input
                 label="Title"
@@ -199,7 +199,6 @@ const UpdateBlog = () => {
             {error && <Error message={error.data} />}
           </form>
         </div>
-        {error && <Error message={error.data} />}
       </div>
     </>
   );

@@ -38,7 +38,7 @@ const Blogs = () => {
         <NavBar />
         <div className="px-10 mt-6 flex justify-between">
           <h1 className="text-2xl font-bold">Blogs</h1>
-          <Link to="/project/create">
+          <Link to="/blogs/create">
             <button className="flex items-center justify-center w-6 h-6 ml-auto text-indigo-500 rounded hover:bg-indigo-500 hover:text-indigo-100">
               <svg
                 className="w-5 h-5"

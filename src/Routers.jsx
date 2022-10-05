@@ -2,11 +2,13 @@ import React from "react";
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Blogs from "./pages/Blogs/Blogs";
+import CreateBlog from "./pages/Blogs/create/CreateBlog";
 import UpdateBlog from "./pages/Blogs/update/UpdateBlog";
 import Login from "./pages/Login/Login";
 import CreateProject from "./pages/projects/create/CreateProject";
 import Projects from "./pages/projects/Projects";
 import UpdateProject from "./pages/projects/update/UpdateProject";
+import CreateReview from "./pages/review/create/CreateReview";
 import Reviews from "./pages/review/Reviews";
 import UpdateReview from "./pages/review/update/UpdateReview";
 import PrivateRoute from "./utils/PrivateRoute";
@@ -57,6 +59,14 @@ const Routers = () => {
             }
           />
           <Route
+            path="/blogs/create"
+            element={
+              <PrivateRoute>
+                <CreateBlog />
+              </PrivateRoute>
+            }
+          />
+          <Route
             path="/blog/:blogId"
             element={
               <PrivateRoute>
@@ -69,6 +79,14 @@ const Routers = () => {
             element={
               <PrivateRoute>
                 <Reviews />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/review/create"
+            element={
+              <PrivateRoute>
+                <CreateReview />
               </PrivateRoute>
             }
           />

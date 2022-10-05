@@ -156,7 +156,7 @@ const UseProjectUpdate = () => {
   const handleChangeSelect = (newValue) => {
     const reduceValue = newValue?.map((value) => value.value);
     console.log(reduceValue);
-    setInputCategory([...inputCategory, ...reduceValue]);
+    setInputCategory([...reduceValue]);
   };
   console.log(selectImage);
   // editor

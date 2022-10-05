@@ -42,8 +42,8 @@ const Reviews = () => {
       <div className="flex flex-col w-screen h-screen overflow-auto text-gray-700 bg-gradient-to-tr from-blue-200 via-indigo-200 to-pink-200">
         <NavBar />
         <div className="px-10 mt-6 flex justify-between">
-          <h1 className="text-2xl font-bold">Blogs</h1>
-          <Link to="/project/create">
+          <h1 className="text-2xl font-bold">Reviews</h1>
+          <Link to="/review/create">
             <button className="flex items-center justify-center w-6 h-6 ml-auto text-indigo-500 rounded hover:bg-indigo-500 hover:text-indigo-100">
               <svg
                 className="w-5 h-5"
