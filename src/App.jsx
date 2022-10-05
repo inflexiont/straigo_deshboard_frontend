@@ -1,5 +1,3 @@
-import React from "react";
-import "./App.css";
 import useAuthCheck from "./hooks/useAuthCheck";
 import Routers from "./Routers";
 

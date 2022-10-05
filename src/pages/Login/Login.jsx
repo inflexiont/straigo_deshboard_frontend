@@ -1,7 +1,6 @@
 import { Button, Input } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 import Error from "../../components/ui/Error";
-import UserList from "../../components/ui/UserList";
 import NavLogo from "../../utils/NavLogo";
 import UseLogin from "./UseLogin";
 
@@ -65,7 +64,6 @@ export default function Login() {
           </form>
         </div>
       </div>
-      <UserList />
     </div>
   );
 }
